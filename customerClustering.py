@@ -87,8 +87,8 @@ class CustomerClassification:
         self.mall_d['Cluster_Id'] = self.cluster.labels_
     def createNewCustomer(self):
         st.sidebar.title('Wähle die Eigenschaften des neuen Kunden aus:')
-        age = st.sidebar.slider('Alter', self.mall.Age.min(), 100, 30)
-        annualIncome = st.sidebar.slider('Jährliches Einkommen (in T€)', self.mall['Annual Income (k$)'].min(), 150, 30)
+        age = st.sidebar.slider('Alter', 18, 100, 30)
+        annualIncome = st.sidebar.slider('Jährliches Einkommen (in T€)', 20, 150, 30)
         annualSpending = st.sidebar.slider('Ausgaben Score', 0,100, 50)
 
 
