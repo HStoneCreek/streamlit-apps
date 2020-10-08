@@ -1,5 +1,5 @@
-https://github.com/explosion/spacy-models/archive/de_core_news_lg-3.0.0a0.tar.gz
-https://github.com/explosion/spacy-models/archive/en_core_web_lg-2.3.1.tar.gz
+https://github.com/explosion/spacy-models/releases/download/de_core_news_lg-3.0.0a0/de_core_news_lg-3.0.0a0.tar.gz
+https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-2.3.1/en_core_web_lg-2.3.1.tar.gz
 altair==4.1.0
 appnope==0.1.0
 argon2-cffi==20.1.0
