@@ -25,7 +25,7 @@ def main():
     if case == 'Überblick':
         st.title('KI Erleben - Interaktive Fallstudien')
         st.header('3 Szenarien für den Bankalltag')
-
+        st.markdown("""<style>h3:hover{color: red;}</style><div><h3>Test</h3></div>""", unsafe_allow_html=True)
         st.subheader('1. Textsentiment Analyse ')
         textSentiment = '''
         Jede Sekunde werden Millionen Zeilen von Informationen veröffentlicht, die unterschiedliche Relevanz für den Bankalltag haben.
@@ -57,6 +57,7 @@ def main():
         TextSentiment.run()
     
     if case == 'Kunden Klassifikation':
+        st.markdown("""<style>hover h3{color: red;}</style><div><h3>Test</h3></div>""", unsafe_allow_html=True)
         customerClass = CustomerClassification()
         customerClass.run()
     
