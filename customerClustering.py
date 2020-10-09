@@ -61,8 +61,10 @@ from random import sample
 from numpy.random import uniform
 from math import isnan
 
+plt.rcParams["axes.labelsize"] = 20
 
-# In[151]:
+
+# In[1]:
 
 
 class CustomerClassification:
@@ -73,6 +75,7 @@ class CustomerClassification:
         self.newCustomer = None
         self.cluster = None
         self.scaler = None
+        self.summary = None
         
     def prepareData(self):
         mall_c = self.mall.drop(['CustomerID','Gender'],axis=1,inplace=True)
@@ -101,29 +104,49 @@ class CustomerClassification:
         
     def createScatterPlot(self,newCustomer):
         plt.figure(figsize = (20,8))
-        plt.subplot(1,3,1)
+        #plt.subplot(1,3,1)
         sns.scatterplot(x = 'Age', y = 'Annual Income (k$)',hue='Cluster_Id',data = self.mall_d,legend='full',s = 120,palette="Set1")
-        sns.scatterplot(x='Age', y='Annual Income (k$)', data = self.newCustomer,s = 200,color='orange')
-        plt.subplot(1,3,2)
+        sns.scatterplot(x='Age', y='Annual Income (k$)',marker='X', data = self.newCustomer,s = 600,color='#707172')
+        #plt.subplot(1,3,2)
+        st.pyplot(plt)
+        
+        plt.figure(figsize = (20,8))
         sns.scatterplot(x = 'Annual Income (k$)', y = 'Spending Score (1-100)',hue='Cluster_Id', data = self.mall_d,legend='full',s=120,palette="Set1")
-        sns.scatterplot(x='Age', y='Annual Income (k$)', data = self.newCustomer,s = 200,color='orange')
-        plt.subplot(1,3,3)
+        sns.scatterplot(x='Age', y='Spending Score (1-100)',marker='X', data = self.newCustomer,s = 600,color='#707172')
+        #plt.subplot(1,3,3)
+        st.pyplot(plt)
+        
+        plt.figure(figsize = (20,8))
         sns.scatterplot(x = 'Spending Score (1-100)', y = 'Age',hue='Cluster_Id',data= self.mall_d,legend='full',s=120,palette="Set1")
-        sns.scatterplot(x='Age', y='Annual Income (k$)', data = self.newCustomer,s = 200,color='orange')
+        sns.scatterplot(x='Age', y='Age',marker='X', data = self.newCustomer,s = 600,color='#707172')
         st.pyplot(plt)
     def createViolinPlot(self, newCustomer):
-        st.table(newCustomer)
         fig, axes = plt.subplots(1,3, figsize=(20,5))
 
-
-        sns.violinplot(x = 'Cluster_Id', y = 'Age', data = self.mall_d,ax=axes[0])
-        sns.scatterplot(x='Cluster_Id', y='Age', data = self.newCustomer,ax=axes[0], s= 100,color='red')
-        sns.violinplot(x = 'Cluster_Id', y = 'Annual Income (k$)', data = self.mall_d,ax=axes[1])
-        sns.scatterplot(x='Cluster_Id', y='Annual Income (k$)', data = self.newCustomer,ax=axes[1], s= 100,color='red')
-        sns.violinplot(x = 'Cluster_Id', y = 'Spending Score (1-100)', data=self.mall_d,ax=axes[2])
-        sns.scatterplot(x='Cluster_Id', y='Spending Score (1-100)', data = self.newCustomer,ax=axes[2], s= 100,color='red')
+        sns.violinplot(x = 'Cluster_Id', y = 'Age', inner=None, data = self.mall_d,ax=axes[0])
+        sns.scatterplot(x='Cluster_Id', y='Age', data = self.newCustomer,ax=axes[0],marker='X', s= 300,color='#707172')
+        sns.violinplot(x = 'Cluster_Id', y = 'Annual Income (k$)',inner=None, data = self.mall_d,ax=axes[1])
+        sns.scatterplot(x='Cluster_Id', y='Annual Income (k$)',marker='X', data = self.newCustomer,ax=axes[1], s= 300,color='#707172')
+        sns.violinplot(x = 'Cluster_Id', y = 'Spending Score (1-100)', inner=None,data=self.mall_d,ax=axes[2])
+        sns.scatterplot(x='Cluster_Id', y='Spending Score (1-100)', marker='X', data = self.newCustomer,ax=axes[2], s= 300,color='#707172')
 
         st.pyplot(fig)
+        
+    def getSummary(self):
+        self.summary = self.mall_d[['Age', 'Annual Income (k$)','Spending Score (1-100)','Cluster_Id']].groupby('Cluster_Id').mean()
+        
+    
+    def getSummaryForCluster(self, cluster):
+        summary = self.summary.loc[int(cluster)].to_dict()
+        if cluster == 0:
+            summary['Desc'] = ''
+        elif cluster == 1:
+            summary['Desc'] = ''
+        elif cluster == 2:
+            summary['Desc']  = ''
+        elif cluster == 3:
+            summary['Desc'] = ''
+        return summary
     def run(self):
         i = 0
         if i <1:
@@ -131,7 +154,25 @@ class CustomerClassification:
             self.predict()
             i +=1    
         self.createNewCustomer()
-        st.title('3. Fallstudie Kunden Klassifikation')
+        css = """
+            <style>h3:hover{
+            color: #0e3c8a;}
+            h1{
+            color: #f08200;
+            }
+            h2 {
+            color: #707172
+            }
+            .customer {
+            font-size: 15px;
+            }
+            .customer:hover{
+            color: #f08200;
+            }
+            </style>
+        """
+        st.markdown(css, unsafe_allow_html=True)
+        st.title('2. Fallstudie Kundenklassifizierung')
         st.header('Am Beispiel von Besuchern einer Einkaufsstraße')
         textIntro = """
         Stellen Sie sich vor Sie sind Besitzer einer gut besuchten Einkaufsstraße. Über Kundenkarten können Sie die Umsätze
@@ -143,19 +184,29 @@ class CustomerClassification:
         Kluster eingeordnet würde.
         """
         st.write(textIntro)
-        newCustomer = self.newCustomer.rename(columns={'Age':'Alter', 'Annual Income':'Jährliches Einkommen',
+        
+        
+        
+        
+        newCustomer = self.newCustomer.rename(columns={'Age':'Alter', 'Annual Income (k$)':'Jährliches Einkommen (k€)',
                                                       'Spending Score (1-100)': 'Ausgabenscore'})
         st.subheader('Ihr Kunde hat folgende Eigenschaften:')
-        st.write(newCustomer)
+        st.markdown("""<div class='customer'>Alter: """+str(newCustomer['Alter'][0])+"""</div>""",unsafe_allow_html=True)
+        st.markdown("""<div class='customer'>Jährliches Einkommen (k€): """+str(newCustomer['Jährliches Einkommen (k€)'][0])+"""</div>""",unsafe_allow_html=True)
+        st.markdown("""<div class='customer'>Ausgabenscore: """+str(newCustomer['Ausgabenscore'][0])+"""</div>""",unsafe_allow_html=True)
         st.subheader('Der Kunde wird folgendem Cluster zugeordnet:')
-        st.write(self.newCustomer['Cluster_Id'])
-        st.subheader('Beschreibung des Cluster:')
-        st.write('Hier den Text noch kopieren')
-        st.subheader('Clustering der Daten am Beispiel der Einflussfaktoren')
-        self.createScatterPlot(self.newCustomer)
+        st.markdown("""<div class='customer'>"""+str(newCustomer['Cluster_Id'][0])+"""</div>""",unsafe_allow_html=True)
+        st.subheader('Beschreibung des Cluster (im Durchschnitt):')
+        self.getSummary()
+        dictSummary = self.getSummaryForCluster(newCustomer['Cluster_Id'][0])
+        st.markdown("""<div class='customer'>Alter: """+str(round(dictSummary['Age'],2))+"""</div>""",unsafe_allow_html=True)
+        st.markdown("""<div class='customer'>Jährliches Einkommen (k€): """+str(round(dictSummary['Annual Income (k$)'],2))+"""</div>""",unsafe_allow_html=True)
+        st.markdown("""<div class='customer'>Ausgabenscore: """+str(round(dictSummary['Spending Score (1-100)'],2))+"""</div>""",unsafe_allow_html=True)
+        
         st.subheader('Verteilung der Einflussfaktoren pro Cluster')
         self.createViolinPlot(self.newCustomer)
-
+        st.subheader('Clustering der Daten am Beispiel der Einflussfaktoren')
+        self.createScatterPlot(self.newCustomer)
         
     
 
