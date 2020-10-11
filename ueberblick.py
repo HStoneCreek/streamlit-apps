@@ -12,7 +12,10 @@ import textSentiment
 from textSentiment import *
 from customerClustering import *
 from creditDefault import *
-#import creditDefault
+import en_core_web_lg
+import de_core_news_lg
+nlpEN = en_core_web_lg.load()
+nlpDE = de_core_news_lg.load()
 
 
 # In[ ]:
@@ -166,7 +169,8 @@ def main():
         '''
         #st.write(textCreditDefault)
     if case == 'Textanalyse':
-        TextSentiment.run()
+        textSenti = TextSentiment(nlpEN,nlpDE)
+        textSenti.run()
     
     if case == 'Kunden Klassifikation':
         
