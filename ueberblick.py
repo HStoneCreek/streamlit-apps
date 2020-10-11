@@ -11,6 +11,7 @@ import textSentiment
 
 from textSentiment import *
 from customerClustering import *
+from creditDefault import *
 #import creditDefault
 
 
@@ -172,6 +173,9 @@ def main():
         customerClass = CustomerClassification()
         customerClass.run()
     
+    if case == 'Kreditausfall':
+        creditDefault = CreditDefault()
+        creditDefault.run()
     
 if __name__ == '__main__':
     main()
