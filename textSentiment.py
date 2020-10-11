@@ -18,8 +18,8 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 import spacy
 #import en_core_web_lg
 #import de_core_news_lg
-nlpEN = en_core_web_lg.load()
-nlpDE = de_core_news_lg.load()
+#nlpEN = en_core_web_lg.load()
+#nlpDE = de_core_news_lg.load()
 
 
 # In[ ]:
