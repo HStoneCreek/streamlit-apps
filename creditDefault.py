@@ -32,7 +32,7 @@ sns.set(style='whitegrid')
 # In[36]:
 
 
-class creditDefault:
+class CreditDefault:
     def __init__(self, columns):
         self.columns = ['loan_amnt','term','int_rate','installment', 'emp_length', 'dti', 'earliest_cr_line',
  'open_acc','pub_rec', 'revol_util', 'total_acc', 'mort_acc', 'pub_rec_bankruptcies', 'log_annual_inc',
