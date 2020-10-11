@@ -33,7 +33,7 @@ sns.set(style='whitegrid')
 
 
 class CreditDefault:
-    def __init__(self, columns):
+    def __init__(self):
         self.columns = ['loan_amnt','term','int_rate','installment', 'emp_length', 'dti', 'earliest_cr_line',
  'open_acc','pub_rec', 'revol_util', 'total_acc', 'mort_acc', 'pub_rec_bankruptcies', 'log_annual_inc',
  'fico_score', 'log_revol_bal', 'sub_grade_A2', 'sub_grade_A3', 'sub_grade_A4', 'sub_grade_A5', 'sub_grade_B1', 'sub_grade_B2', 'sub_grade_B3',
@@ -152,7 +152,7 @@ class CreditDefault:
             'verification_status_Source Verified':0, 'verification_status_Verified':0,
             'initial_list_status_w':1, 'application_type_Joint App':application_type_Join_App, 'addr_state_'+str(state):1
         }
-        newBorrower = pd.DataFrame(data = tmpDict, columns = columns, index=[0])
+        newBorrower = pd.DataFrame(data = tmpDict, columns = self.columns, index=[0])
         #newBorrower.append(tmpDict, ignore_index=True)
         newBorrower = newBorrower.fillna(0)
         model = self.loadModel()
