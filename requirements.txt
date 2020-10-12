@@ -109,5 +109,4 @@ watchdog==0.10.3
 wcwidth==0.2.5
 webencodings==0.5.1
 widgetsnbextension==3.5.1
-https://github.com/explosion/spacy-models/releases/download/de_core_news_md-3.0.0a0/de_core_news_md-3.0.0a0.tar.gz#egg=de_core_news_md
 https://github.com/explosion/spacy-models/releases/download/en_core_web_md-3.0.0a0/en_core_web_md-3.0.0a0.tar.gz#egg=en_core_web_md
