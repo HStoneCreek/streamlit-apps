@@ -9,11 +9,12 @@ import streamlit as st
 
 import textSentiment
 
+#import en_core_web_lg
+#import de_core_news_lg
 from textSentiment import *
 from customerClustering import *
 from creditDefault import *
-#import en_core_web_lg
-#import de_core_news_lg
+
 #nlpEN = en_core_web_lg.load()
 #nlpDE = de_core_news_lg.load()
 
