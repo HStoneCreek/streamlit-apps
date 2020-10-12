@@ -12,10 +12,10 @@ import textSentiment
 from textSentiment import *
 from customerClustering import *
 from creditDefault import *
-import en_core_web_lg
-import de_core_news_lg
-nlpEN = en_core_web_lg.load()
-nlpDE = de_core_news_lg.load()
+#import en_core_web_lg
+#import de_core_news_lg
+#nlpEN = en_core_web_lg.load()
+#nlpDE = de_core_news_lg.load()
 
 
 # In[ ]:
@@ -138,6 +138,7 @@ def main():
         Die folgenden Anwendungsbeispiele sollen veranschaulichen, wie Alogrithmen auch in der Finanzwelt unterstützen können.
         '''
         st.markdown(intro)
+        st.image('ki.jpg', use_column_width=True)
         ov = Overview([])
         ov.createContent()
         #st.header('3 Szenarien für den Bankalltag')

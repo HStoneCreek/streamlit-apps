@@ -139,13 +139,13 @@ class CustomerClassification:
     def getSummaryForCluster(self, cluster):
         summary = self.summary.loc[int(cluster)].to_dict()
         if cluster == 0:
-            summary['Desc'] = ''
+            summary['Desc'] = 'Das Cluster ist geprägt von Kunden mittleren Alters, die über ein relativ hohes Einkommen verfügen. Die Ausgaben sind im Vergleich zu den anderen Gruppen am niedrigsten.'
         elif cluster == 1:
-            summary['Desc'] = ''
+            summary['Desc'] = 'Jung und spendabel, so kann man dieses Cluster am Besten beschreiben. Ein Einkommen ist hingegen relativ niedrig.'
         elif cluster == 2:
-            summary['Desc']  = ''
+            summary['Desc']  = 'In diesem Cluster sind vor allem Kunden fortgeschrittenen Alters zu finden mit durchschnittlichen Verdiensten und Ausgaben.'
         elif cluster == 3:
-            summary['Desc'] = ''
+            summary['Desc'] = 'Gut verdienen, gut konsumieren. Mit Anfang 30 im Durchschnitt verdient diese Kundengruppe im Schnitt nicht nur viel, sondern hat auch die höchsten Konsumausgaben.'
         return summary
     def run(self):
         i = 0
@@ -202,7 +202,7 @@ class CustomerClassification:
         st.markdown("""<div class='customer'>Alter: """+str(round(dictSummary['Age'],2))+"""</div>""",unsafe_allow_html=True)
         st.markdown("""<div class='customer'>Jährliches Einkommen (k€): """+str(round(dictSummary['Annual Income (k$)'],2))+"""</div>""",unsafe_allow_html=True)
         st.markdown("""<div class='customer'>Ausgabenscore: """+str(round(dictSummary['Spending Score (1-100)'],2))+"""</div>""",unsafe_allow_html=True)
-        
+        st.markdown("""<div class='customer'>Ausgabenscore: """+str(round(dictSummary['Desc'],2))+"""</div>""",unsafe_allow_html=True)
         st.subheader('Verteilung der Einflussfaktoren pro Cluster')
         self.createViolinPlot(self.newCustomer)
         st.subheader('Clustering der Daten am Beispiel der Einflussfaktoren')

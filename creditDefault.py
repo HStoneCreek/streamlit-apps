@@ -117,30 +117,43 @@ class CreditDefault:
             for x in range(1,6):
                 liste.append(i+str(x))
         states = ['CA', 'NY', 'TX', 'FL', 'IL', 'NJ','OH']
-
+        st.sidebar.subheader('Krediteigenschaften:')
         loan_amnt = st.sidebar.slider('Wie hoch ist der Kreditbetrag?',0,40000,10000)
         term = st.sidebar.radio('Laufzeit des Kredits?', (36,60))
         int_rate = st.sidebar.slider('Wie hoch ist der Zinssatz?', 0.0, 15.0,5.0,0.25)
         installment = (loan_amnt*(1+(int_rate/100))**(term/12))/term
-        emp_length = st.sidebar.slider('Wie lange besteht das Beschäftigungsverhältnis?', 0, 15,5)
-        earliest_cr_line = st.sidebar.slider('Wann wurde die erste Kreditlinie beantragt?', 1995,2015,2010)
-        open_acc = st.sidebar.slider('Wie viele Kredite werden aktuell beansprucht?', 0, 30, 5)
-        revol_util = st.sidebar.slider('Wie viel Prozent der zur Verfügung stehenden Kreditlinie nutzt der Kunde aktuell?', 0.0, 1.0,0.1)
-
-        pub_rec = st.sidebar.slider('Wie viele negative Eintragungen bestehen?', 0,15,0)
         application_type_Join_App = st.sidebar.radio('Wird der Antrag alleine gestellt?', ('Ja', 'Nein'))
         if application_type_Join_App == 'Ja':
             application_type_Join_App = 0
         else:
             application_type_Join_App = 1
-        annualIncome = st.sidebar.slider('Wie viel verdient der Kreditnehmer pro Jahr?', 0,200000, 50000) 
-        mort_acc = st.sidebar.slider('Wie viele Hauskredite bestehen?', 0, 10, 2)
-        total_acc = st.sidebar.slider('Wie viele Kredite befinden sich in der Kredithistorie?', 0,30,5)
+        
+        st.sidebar.subheader('Kundeneigenschaften:')
+        st.sidebar.text('Allgemein')
+        
+        state = st.sidebar.select_slider('Aus welchem Staat kommt der Kreditnehmer?', options = states)
+        home_ownership = st.sidebar.radio('Wie steht es um die Wohnverhältnisse?', ('OWN', 'RENT', 'OTHER'))
+        emp_length = st.sidebar.slider('Wie lange besteht das Beschäftigungsverhältnis?', 0, 15,5)
+        pub_rec = st.sidebar.slider('Wie viele negative Eintragungen bestehen?', 0,15,0)
         pub_rec_bankruptcies = st.sidebar.slider('Wie viele Privatinsolvenzen sind veröffentlicht?',0,5,0)
         initial_list_status_w = 1
-        grade = st.sidebar.select_slider('Welches Rating bekommt der Kunde?', options=liste)
+        
+        
+        st.sidebar.text('Finanziell')
+        
+        annualIncome = st.sidebar.slider('Wie viel verdient der Kreditnehmer pro Jahr?', 0,200000, 50000) 
+        mort_acc = st.sidebar.slider('Wie viele Hauskredite bestehen?', 0, 10, 2)
+        earliest_cr_line = st.sidebar.slider('Wann wurde die erste Kreditlinie beantragt?', 1995,2015,2010)
+        total_acc = st.sidebar.slider('Wie viele Kredite befinden sich in der Kredithistorie?', 0,30,5)
+        open_acc = st.sidebar.slider('Wie viele Kredite werden aktuell beansprucht?', 0, 30, 5)
+        revol_util = st.sidebar.slider('Wie viel Prozent der zur Verfügung stehenden Kreditlinie nutzt der Kunde aktuell?', 0.0, 1.0,0.1)
+
         home_ownership = st.sidebar.radio('Wie steht es um die Wohnverhältnisse?', ('OWN', 'RENT', 'OTHER'))
         state = st.sidebar.select_slider('Aus welchem Staat kommt der Kreditnehmer?', options = states)
+        
+        st.sidebar.subheader('Fazit:')
+        grade = st.sidebar.select_slider('Welches Rating bekommt der Kunde?', options=liste)
+        
 
         tmpDict = {
             'loan_amnt':loan_amnt, 'term':term, 'int_rate':int_rate, 
@@ -156,8 +169,49 @@ class CreditDefault:
         #newBorrower.append(tmpDict, ignore_index=True)
         newBorrower = newBorrower.fillna(0)
         model = self.loadModel()
+        
+        css = """
+            <style>h3:hover{
+            color: #0e3c8a;}
+            h1{
+            color: #f08200;
+            }
+            h2 {
+            color: #707172
+            }
+            .customer {
+            font-size: 15px;
+            }
+            .customer:hover{
+            color: #f08200;
+            }
+            </style>
+        """
+        st.markdown(css, unsafe_allow_html=True)
+        
+        st.title('3. Fallstudie Kreditausfall')
+        st.header('Am Beispiel einer amerikanischen Kreditplattform')
+        textIntro = """
+        Die Grundlage dieses Fallbeispiels bidlet ein Datensatz der Kreditvergabeplattform Lending Club. Auf der
+        Plattform können Privatleute Kredite beantragen, die widerrum von privaten oder institutionellen Investoren
+        finanziert werden. In dem Betrachtungszeitraum liegen knapp 2 Mio. Datensätze mit Krediten in unterschiedlichen
+        Stadien. Für das Beispiel wurden nur die Kredite betrachtet, die entweder komplett abbezahlt wurden oder während der
+        Laufzeit ausgefallen sind. Von diesen Daten wurden nur die zugänglichen Informationen genommen, die bei Kreditbeantragung
+        zur Verfügung standen und ein Model trainiert, welches den Kreditausfall prognostizieren sollen. In der
+        Praxis könnte ein derartiges Modell als Entscheidungshilfe dienen. Probieren Sie es aus! Erstellen Sie über die Slider 
+        einen eigenen Kreditbeantrager.
+        """
+        st.write(textIntro)
+        st.write('Auf Basis der eingestellten Parameter kommt das Modell zu folgender Entscheidung:')
         st.write(newBorrower)
-        st.write(model.predict(newBorrower))
+        prediction = model.predict(newBorrower)
+        if prediction == 0:
+            st.write('Die Kreditausfallwahrscheinlichkeit wird als gering eingestuft.')
+        elif prediction == 1:
+            st.write('Die Kreditausfallwahrscheinlichkeit wird als hoch eingestuft.')
+        st.write('''Die folgenden Grafiken sollen veranschaulichen, welche Einflussfaktoren für die Entscheidung
+                 des Modells maßgeblich waren. Diese sogeannten SHAP-Values dienen als Interpretationshilfe.
+                 ''')
         
     def loadModel(self):
         with open("modelCreditDefault.p", 'rb') as input_file:
