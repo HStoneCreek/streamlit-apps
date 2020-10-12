@@ -20,7 +20,7 @@ from spacy import load
 import en_core_web_md
 import de_core_news_md
 nlpEN = en_core_web_md.load()
-nlpDE = de_core_news_md.load()
+#nlpDE = de_core_news_md.load()
 
 
 # In[ ]:
@@ -33,7 +33,7 @@ class TextSentiment:
         
     
         
-    def run():
+    def run(self):
         
         @st.cache
         def loadPipeline():
