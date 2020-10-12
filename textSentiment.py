@@ -27,9 +27,9 @@ nlpDE = de_core_news_md.load()
 
 
 class TextSentiment:
-    def __init__(self, nlpEN, nlpDE):
-        self.nlpEN = nlpEN
-        self.nlpDE = nlpDE
+    def __init__(self):
+        self.nlpEN = 'nlpEN'
+        self.nlpDE = 'nlpDE'
         
     
         
@@ -51,11 +51,11 @@ class TextSentiment:
 
         language = st.sidebar.selectbox(label='Wählen Sie bitte die Sprache', options=['Englisch', 'Deutsch'])
         if language == 'Deutsch':
-            spacy_model = self.nlpDE
+            spacy_model = 'de_core_news_md'
             DEFAULT_TEXT = """
             Dies ist ein Beispiel."""
         elif language == 'Englisch':
-            spacy_model = self.nlpEN
+            spacy_model = 'en_core_web_md'
             DEFAULT_TEXT = """Instead of the anticipated million-mile battery, we got the $25,000 car, at Tesla’s eagerly awaited Battery Day on Tuesday.
         Elon Musk emphasised cutting the cost of batteries by more than half, rather than getting more miles out of them, meaning an electric car priced
         on a par with conventional vehicles becoming available in about three years.

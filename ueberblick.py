@@ -171,7 +171,7 @@ def main():
         '''
         #st.write(textCreditDefault)
     if case == 'Textanalyse':
-        textSenti = TextSentiment(nlpEN,nlpDE)
+        textSenti = TextSentiment()
         textSenti.run()
     
     if case == 'Kunden Klassifikation':
