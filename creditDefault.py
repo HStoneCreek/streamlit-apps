@@ -129,7 +129,7 @@ class CreditDefault:
             application_type_Join_App = 1
         
         st.sidebar.subheader('Kundeneigenschaften:')
-        st.sidebar.text('Allgemein')
+        st.sidebar.text('Allgemeine Aspekte')
         
         state = st.sidebar.select_slider('Aus welchem Staat kommt der Kreditnehmer?', options = states)
         home_ownership = st.sidebar.radio('Wie steht es um die Wohnverhältnisse?', ('OWN', 'RENT', 'OTHER'))
@@ -139,7 +139,7 @@ class CreditDefault:
         initial_list_status_w = 1
         
         
-        st.sidebar.text('Finanziell')
+        st.sidebar.text('Finanziell Aspekte')
         
         annualIncome = st.sidebar.slider('Wie viel verdient der Kreditnehmer pro Jahr?', 0,200000, 50000) 
         mort_acc = st.sidebar.slider('Wie viele Hauskredite bestehen?', 0, 10, 2)
@@ -148,8 +148,6 @@ class CreditDefault:
         open_acc = st.sidebar.slider('Wie viele Kredite werden aktuell beansprucht?', 0, 30, 5)
         revol_util = st.sidebar.slider('Wie viel Prozent der zur Verfügung stehenden Kreditlinie nutzt der Kunde aktuell?', 0.0, 1.0,0.1)
 
-        home_ownership = st.sidebar.radio('Wie steht es um die Wohnverhältnisse?', ('OWN', 'RENT', 'OTHER'))
-        state = st.sidebar.select_slider('Aus welchem Staat kommt der Kreditnehmer?', options = states)
         
         st.sidebar.subheader('Fazit:')
         grade = st.sidebar.select_slider('Welches Rating bekommt der Kunde?', options=liste)

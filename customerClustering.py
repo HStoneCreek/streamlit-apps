@@ -202,7 +202,7 @@ class CustomerClassification:
         st.markdown("""<div class='customer'>Alter: """+str(round(dictSummary['Age'],2))+"""</div>""",unsafe_allow_html=True)
         st.markdown("""<div class='customer'>Jährliches Einkommen (k€): """+str(round(dictSummary['Annual Income (k$)'],2))+"""</div>""",unsafe_allow_html=True)
         st.markdown("""<div class='customer'>Ausgabenscore: """+str(round(dictSummary['Spending Score (1-100)'],2))+"""</div>""",unsafe_allow_html=True)
-        st.markdown("""<div class='customer'>Ausgabenscore: """+str(round(dictSummary['Desc'],2))+"""</div>""",unsafe_allow_html=True)
+        st.markdown("""<div class='customer'>Ausgabenscore: """+str(dictSummary['Desc'])+"""</div>""",unsafe_allow_html=True)
         st.subheader('Verteilung der Einflussfaktoren pro Cluster')
         self.createViolinPlot(self.newCustomer)
         st.subheader('Clustering der Daten am Beispiel der Einflussfaktoren')
