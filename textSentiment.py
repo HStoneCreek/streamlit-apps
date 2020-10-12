@@ -17,10 +17,10 @@ from matplotlib.patches import Circle, Wedge, Rectangle
 st.set_option('deprecation.showPyplotGlobalUse', False)
 import spacy
 from spacy import load
-import en_core_web_lg
-import de_core_news_lg
-nlpEN = en_core_web_lg.load()
-nlpDE = de_core_news_lg.load()
+import en_core_web_md
+import de_core_news_md
+nlpEN = en_core_web_md.load()
+nlpDE = de_core_news_md.load()
 
 
 # In[ ]:
