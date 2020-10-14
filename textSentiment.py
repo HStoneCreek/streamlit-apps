@@ -73,14 +73,15 @@ class TextSentiment:
             colors = {'color': "#blue"}
         )
 
-        classifier = loadPipeline()
+        #classifier = loadPipeline()
 
-        summary = classifier(text)
+        #summary = classifier(text)
 
-        if summary[0]['label'] == 'NEGATIVE':
-            score = round((summary[0]['score']*-1)+2)
-        elif summary[0]['label'] == 'POSITIVE':
-            score = round((summary[0]['score'])+2)
+        #if summary[0]['label'] == 'NEGATIVE':
+        #    score = round((summary[0]['score']*-1)+2)
+        #elif summary[0]['label'] == 'POSITIVE':
+            #score = round((summary[0]['score'])+2)
+        score = 3
         st.write('Die Nachricht hat ein Sentiment von: {}'.format(score))
         plot = Tachometer().gauge(labels=['NEGATIVE', 'NEUTRAL','POSITIVE'],arrow=score, colors=['#DC143C','#778899','#32CD32'])
         st.pyplot(plot)
