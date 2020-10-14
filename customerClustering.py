@@ -111,12 +111,14 @@ class CustomerClassification:
         st.pyplot(plt)
         
         plt.figure(figsize = (20,8))
+        st.markdown("""<div><h4>Verhältnis von jährlichem Einkommen und Ausgabenscore</h4></div>""",unsafe_allow_html=True)
         sns.scatterplot(x = 'Annual Income (k$)', y = 'Spending Score (1-100)',hue='Cluster_Id', data = self.mall_d,legend='full',s=120,palette="Set1")
         sns.scatterplot(x='Age', y='Spending Score (1-100)',marker='X', data = self.newCustomer,s = 600,color='#707172')
         #plt.subplot(1,3,3)
         st.pyplot(plt)
         
         plt.figure(figsize = (20,8))
+        st.markdown("""<div><h4>Verhältnis von Ausgabenscore und Alter</h4></div>""",unsafe_allow_html=True)
         sns.scatterplot(x = 'Spending Score (1-100)', y = 'Age',hue='Cluster_Id',data= self.mall_d,legend='full',s=120,palette="Set1")
         sns.scatterplot(x='Age', y='Age',marker='X', data = self.newCustomer,s = 600,color='#707172')
         st.pyplot(plt)
@@ -204,11 +206,12 @@ class CustomerClassification:
         st.markdown("""<div class='customer'>Ausgabenscore: """+str(round(dictSummary['Spending Score (1-100)'],2))+"""</div>""",unsafe_allow_html=True)
         st.write('Beschreibung des Clusters:')
         
-        st.markdown("""<div style="color:#f08200" """+str(dictSummary['Desc'])+"""</div>""",unsafe_allow_html=True)
+        st.markdown("""<div style="color:#f08200>" """+str(dictSummary['Desc'])+"""</div>""",unsafe_allow_html=True)
         st.subheader('Verteilung der Einflussfaktoren pro Cluster')
         self.createViolinPlot(self.newCustomer)
         st.subheader('Darstellung der Cluster')
         self.createScatterPlot(self.newCustomer)
+        st.write('Info Text')
         
     
 

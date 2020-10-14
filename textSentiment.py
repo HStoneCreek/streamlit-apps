@@ -55,23 +55,20 @@ class TextSentiment:
             Dies ist ein Beispiel."""
         elif language == 'Englisch':
             spacy_model = 'en_core_web_md'
-            DEFAULT_TEXT = """Instead of the anticipated million-mile battery, we got the $25,000 car, at Tesla’s eagerly awaited Battery Day on Tuesday.
-        Elon Musk emphasised cutting the cost of batteries by more than half, rather than getting more miles out of them, meaning an electric car priced
-        on a par with conventional vehicles becoming available in about three years.
-        Tesla will get there partly by taking control of all stages of manufacturing of its batteries, including the basic cells,
-        processing the raw materials and even buying lithium deposits still in the ground.
+            DEFAULT_TEXT = """Instead of the anticipated million-mile battery, we got the $25,000 car, at Tesla’s eagerly awaited Battery Day on Tuesday. Elon Musk emphasised cutting the cost of batteries by more than half, rather than getting more miles out of them, meaning an electric car priced on a par with conventional vehicles becoming available in about three years. Tesla will get there partly by taking control of all stages of manufacturing of its batteries, including the basic cells, processing the raw materials and even buying lithium deposits still in the ground.
         """
 
-        st.title("KI Erleben")
+        st.title('1. Fallstudie Textanalyse')
+        st.header('Am Beispiel von Entitätserkennung und Sentimentanalyse')
         st.write("""Mit modernster künstlicher Intelligenz lassen sich Textbausteine Kontexte aus einem Text erschließen.""")
-        text = st.text_area("Folgenden Text analysieren:", DEFAULT_TEXT, height=300)# max_chars=None
+        text = st.text_area("Folgenden Text analysieren:", DEFAULT_TEXT, height=200)# max_chars=None
         doc = sst.process_text(spacy_model, text)
 
         sst.visualize_ner(
             doc,
             labels=["PERSON", "DATE", "GPE", "EVENT", "ORG",'CARDINAL', 'FAC', 'LANGUAGE', 'LAW', 'LOC', 'MONEY', 'NORP', 'ORDINAL', 'PERCENT', 'PRODUCT', 'QUANTITY', 'TIME', 'WORK_OF_ART'],
             show_table=False,
-            title="Analyse von Persoen, Daten, Organisationen etc.",
+            title="Analyse von Personen, Daten, Organisationen etc.",
             sidebar_title=None,
             colors = {'color': "#blue"}
         )

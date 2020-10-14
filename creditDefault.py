@@ -169,7 +169,7 @@ class CreditDefault:
             'earliest_cr_line':earliest_cr_line, 'open_acc':open_acc, 'pub_rec':pub_rec, 
             'revol_util':revol_util, 'total_acc':total_acc, 'mort_acc':mort_acc, 
             'pub_rec_bankruptcies':pub_rec_bankruptcies, 'log_annual_inc': np.log10(annualIncome+1),'fico_score':680, 
-            'log_revol_bal': 200000,'home_ownership_'+str(home_ownership):1, 'sub_grade_'+str(grade):1, 
+            'log_revol_bal': 200000,'home_ownership_'+str(home_ownership):1, 
             'verification_status_Source Verified':0, 'verification_status_Verified':0,
             'initial_list_status_w':1, 'application_type_Joint App':application_type_Join_App, 'addr_state_'+str(state):1
         }
@@ -210,7 +210,6 @@ class CreditDefault:
         """
         st.write(textIntro)
         st.write('Auf Basis der eingestellten Parameter kommt das Modell zu folgender Entscheidung:')
-        st.write(newBorrower)
         prediction = model.predict(newBorrower)
         if prediction == 0:
             st.write('Die Kreditausfallwahrscheinlichkeit wird als gering eingestuft.')

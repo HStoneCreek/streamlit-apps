@@ -9,14 +9,10 @@ import streamlit as st
 
 import textSentiment
 
-#import en_core_web_lg
-#import de_core_news_lg
+
 from textSentiment import *
 from customerClustering import *
 from creditDefault import *
-
-#nlpEN = en_core_web_lg.load()
-#nlpDE = de_core_news_lg.load()
 
 
 # In[ ]:
@@ -112,9 +108,19 @@ class Overview:
         Die 3. Fallstudie beschäftigt sich mit eben diesem Problem.</p>
         </div>
         """
+        html4 ="""
+        <div>
+        <input type="checkbox" id="faq-3">
+        <h2><label for="faq-3">Allgemeine Informationen</label></h2>
+        <p id="drop">Die für diese Fallstudien verwendeten Daten sind freizugängliche, anonymisierte Datensätze.
+        Rückschlüsse auf private Personen sind nicht möglich. Die einzelne Quelle findet sich unten in der
+        jeweiligen Fallstudie. </p>
+        </div>
+        """
         st.markdown(html, unsafe_allow_html=True)
         st.markdown(html2, unsafe_allow_html=True)
         st.markdown(html3, unsafe_allow_html=True)
+        st.markdown(html4, unsafe_allow_html=True)
 
 
 # In[ ]:
@@ -182,6 +188,7 @@ def main():
     if case == 'Kreditausfall':
         creditDefault = CreditDefault()
         creditDefault.run()
+    
     
 if __name__ == '__main__':
     main()
