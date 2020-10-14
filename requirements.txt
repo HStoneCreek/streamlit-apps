@@ -1,5 +1,6 @@
 pip == 20.2.3
 altair==4.1.0
+xgboost
 appnope==0.1.0
 argon2-cffi==20.1.0
 astor==0.8.1

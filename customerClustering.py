@@ -143,7 +143,7 @@ class CustomerClassification:
         if cluster == 0:
             summary['Desc'] = 'Das Cluster ist geprägt von Kunden mittleren Alters, die über ein relativ hohes Einkommen verfügen. Die Ausgaben sind im Vergleich zu den anderen Gruppen am niedrigsten.'
         elif cluster == 1:
-            summary['Desc'] = 'Jung und spendabel, so kann man dieses Cluster am Besten beschreiben. Ein Einkommen ist hingegen relativ niedrig.'
+            summary['Desc'] = 'Jung und spendabel, so kann man dieses Cluster am Besten beschreiben. Das Einkommen ist hingegen relativ niedrig.'
         elif cluster == 2:
             summary['Desc']  = 'In diesem Cluster sind vor allem Kunden fortgeschrittenen Alters zu finden mit durchschnittlichen Verdiensten und Ausgaben.'
         elif cluster == 3:

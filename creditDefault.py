@@ -20,7 +20,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import SGDClassifier
 import pickle
-
+import xgboost
 # Pandas options
 pd.set_option('display.max_colwidth', 1000, 'display.max_rows', None, 'display.max_columns', None)
 
