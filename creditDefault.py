@@ -127,6 +127,22 @@ class CreditDefault:
             application_type_Join_App = 0
         else:
             application_type_Join_App = 1
+        #todo einbauen
+        tmpDict = {
+            'Kreditkartenschulden':'purpose_credit_card',
+            'Schuldenkonsolidierung': 'purpose_debt_consolidation',
+            'Fortbildung' : 'purpose_educational',
+            'Einrichtung': 'purpose_home_improvement',
+            'Hauskauf': 'purpose_house',
+            'Größere Anschaffung': 'purpose_major_purchase',
+            'Gesundheit': 'purpose_medical',
+            'Umzug': 'purpose_moving',
+            'Weiteres': 'purpose_other',
+            'Erneuerbare Energien': 'purpose_renewable_energy',
+            'Kleines Unternehmen': 'purpose_small_business',
+            'Reisen': 'purpose_vacation',
+            'Hochzeit': 'purpose_wedding'
+        }
         
         st.sidebar.subheader('Kundeneigenschaften:')
         st.sidebar.text('Allgemeine Aspekte')
@@ -138,7 +154,6 @@ class CreditDefault:
         pub_rec_bankruptcies = st.sidebar.slider('Wie viele Privatinsolvenzen sind veröffentlicht?',0,5,0)
         initial_list_status_w = 1
         
-        
         st.sidebar.text('Finanziell Aspekte')
         
         annualIncome = st.sidebar.slider('Wie viel verdient der Kreditnehmer pro Jahr?', 0,200000, 50000) 
@@ -147,11 +162,6 @@ class CreditDefault:
         total_acc = st.sidebar.slider('Wie viele Kredite befinden sich in der Kredithistorie?', 0,30,5)
         open_acc = st.sidebar.slider('Wie viele Kredite werden aktuell beansprucht?', 0, 30, 5)
         revol_util = st.sidebar.slider('Wie viel Prozent der zur Verfügung stehenden Kreditlinie nutzt der Kunde aktuell?', 0.0, 1.0,0.1)
-
-        
-        st.sidebar.subheader('Fazit:')
-        grade = st.sidebar.select_slider('Welches Rating bekommt der Kunde?', options=liste)
-        
 
         tmpDict = {
             'loan_amnt':loan_amnt, 'term':term, 'int_rate':int_rate, 
@@ -164,7 +174,6 @@ class CreditDefault:
             'initial_list_status_w':1, 'application_type_Joint App':application_type_Join_App, 'addr_state_'+str(state):1
         }
         newBorrower = pd.DataFrame(data = tmpDict, columns = self.columns, index=[0])
-        #newBorrower.append(tmpDict, ignore_index=True)
         newBorrower = newBorrower.fillna(0)
         model = self.loadModel()
         
@@ -215,10 +224,4 @@ class CreditDefault:
         with open("modelCreditDefault.p", 'rb') as input_file:
             modelTest = pickle.load(input_file)
         return modelTest
-
-
-# In[ ]:
-
-
-
 

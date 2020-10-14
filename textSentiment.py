@@ -18,9 +18,8 @@ st.set_option('deprecation.showPyplotGlobalUse', False)
 import spacy
 from spacy import load
 import en_core_web_md
-#import de_core_news_md
+
 nlpEN = en_core_web_md.load()
-#nlpDE = de_core_news_md.load()
 
 
 # In[ ]:
@@ -65,14 +64,14 @@ class TextSentiment:
 
         st.title("KI Erleben")
         st.write("""Mit modernster künstlicher Intelligenz lassen sich Textbausteine Kontexte aus einem Text erschließen.""")
-        text = st.text_area("Folgenden Text analysieren:", DEFAULT_TEXT, height=100)
+        text = st.text_area("Folgenden Text analysieren:", DEFAULT_TEXT, height=300)# max_chars=None
         doc = sst.process_text(spacy_model, text)
 
         sst.visualize_ner(
             doc,
             labels=["PERSON", "DATE", "GPE", "EVENT", "ORG",'CARDINAL', 'FAC', 'LANGUAGE', 'LAW', 'LOC', 'MONEY', 'NORP', 'ORDINAL', 'PERCENT', 'PRODUCT', 'QUANTITY', 'TIME', 'WORK_OF_ART'],
             show_table=False,
-            title="Persons, dates and locations",
+            title="Analyse von Persoen, Daten, Organisationen etc.",
             sidebar_title=None,
             colors = {'color': "#blue"}
         )
@@ -88,7 +87,11 @@ class TextSentiment:
         st.write('Die Nachricht hat ein Sentiment von: {}'.format(score))
         plot = Tachometer().gauge(labels=['NEGATIVE', 'NEUTRAL','POSITIVE'],arrow=score, colors=['#DC143C','#778899','#32CD32'])
         st.pyplot(plot)
-        st.text(f"Analyzed using spaCy model {spacy_model}")
+        information = '''
+        Grundlage für diese Fallstudie ist ein bereit trainiertes Neuronales Netz, welches auf die jeweilige
+        Sprache vortrainiert wurde. Für weitere Informationen gucken Sie bitte hier: https://spacy.io/. Die Integration
+        in Streamlit erfolgte dankenswerterweise durch: https://github.com/explosion/spacy-streamlit'''
+        st.write(information)
         
 class Tachometer:
     def __init__(self):

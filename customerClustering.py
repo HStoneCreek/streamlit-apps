@@ -14,7 +14,6 @@ import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 # In[90]:
 
 
-# Supress Warnings
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -105,6 +104,7 @@ class CustomerClassification:
     def createScatterPlot(self,newCustomer):
         plt.figure(figsize = (20,8))
         #plt.subplot(1,3,1)
+        st.markdown("""<div><h4>Verhältnis von Alter und jährlichem Einkommen</h4></div>""",unsafe_allow_html=True)
         sns.scatterplot(x = 'Age', y = 'Annual Income (k$)',hue='Cluster_Id',data = self.mall_d,legend='full',s = 120,palette="Set1")
         sns.scatterplot(x='Age', y='Annual Income (k$)',marker='X', data = self.newCustomer,s = 600,color='#707172')
         #plt.subplot(1,3,2)
@@ -195,17 +195,19 @@ class CustomerClassification:
         st.markdown("""<div class='customer'>Jährliches Einkommen (k€): """+str(newCustomer['Jährliches Einkommen (k€)'][0])+"""</div>""",unsafe_allow_html=True)
         st.markdown("""<div class='customer'>Ausgabenscore: """+str(newCustomer['Ausgabenscore'][0])+"""</div>""",unsafe_allow_html=True)
         st.subheader('Der Kunde wird folgendem Cluster zugeordnet:')
-        st.markdown("""<div class='customer'>"""+str(newCustomer['Cluster_Id'][0])+"""</div>""",unsafe_allow_html=True)
+        st.markdown("""<div class='customer'><b>"""+str(newCustomer['Cluster_Id'][0])+"""</b></div>""",unsafe_allow_html=True)
         st.subheader('Beschreibung des Cluster (im Durchschnitt):')
         self.getSummary()
         dictSummary = self.getSummaryForCluster(newCustomer['Cluster_Id'][0])
         st.markdown("""<div class='customer'>Alter: """+str(round(dictSummary['Age'],2))+"""</div>""",unsafe_allow_html=True)
         st.markdown("""<div class='customer'>Jährliches Einkommen (k€): """+str(round(dictSummary['Annual Income (k$)'],2))+"""</div>""",unsafe_allow_html=True)
         st.markdown("""<div class='customer'>Ausgabenscore: """+str(round(dictSummary['Spending Score (1-100)'],2))+"""</div>""",unsafe_allow_html=True)
-        st.markdown("""<div class='customer'>Ausgabenscore: """+str(dictSummary['Desc'])+"""</div>""",unsafe_allow_html=True)
+        st.write('Beschreibung des Clusters:')
+        
+        st.markdown("""<div style="color:#f08200" """+str(dictSummary['Desc'])+"""</div>""",unsafe_allow_html=True)
         st.subheader('Verteilung der Einflussfaktoren pro Cluster')
         self.createViolinPlot(self.newCustomer)
-        st.subheader('Clustering der Daten am Beispiel der Einflussfaktoren')
+        st.subheader('Darstellung der Cluster')
         self.createScatterPlot(self.newCustomer)
         
     
