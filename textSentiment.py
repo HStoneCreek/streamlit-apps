@@ -43,11 +43,51 @@ class TextSentiment:
             h2 {
             color: #707172
             }
-            .customer {
-            font-size: 15px;
+            input[type="checkbox"] {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              opacity: 0;
             }
-            .customer:hover{
-            color: #f08200;
+        
+            label {
+              cursor: pointer;
+            }
+            label {
+              position: relative;
+              display: block;
+              padding-left: 30px;
+            }
+            label::before {
+              content: "";
+              position: absolute;
+              width: 0;
+              height: 0;
+              top: 50%;
+              left: 10px;
+              border-left: 8px solid black;
+              border-top: 8px solid transparent;
+              border-bottom: 8px solid transparent;
+              margin-top: -8px;
+            }
+            input[type="checkbox"]:checked ~ h2 label::before {
+              border-left: 8px solid transparent;
+              border-top: 8px solid black;
+              border-right: 8px solid transparent;
+              margin-left: -4px;
+              margin-top: -4px;
+            }
+
+            #drop {
+              max-height: 0;
+              overflow: hidden;
+              padding-left: 30px;
+              transition: max-height 0.4s ease;
+            }
+            input[type="checkbox"]:checked ~ h2 ~ #drop {
+              max-height: 200px;
             }
             </style>
         """
@@ -79,7 +119,7 @@ class TextSentiment:
 
         st.title('1. Fallstudie Textanalyse')
         st.header('Am Beispiel von Entitätserkennung und Sentimentanalyse')
-        st.write("""Mit modernster künstlicher Intelligenz lassen sich Textbausteine Kontexte aus einem Text erschließen.""")
+        st.write("""Mit Hilfe von neuronalen Netzen lassen sich aus Textbausteinen Kontexte erschließen und die Stimmung einer Nachricht bestimmen.""")
         text = st.text_area("Folgenden Text analysieren:", DEFAULT_TEXT, height=200)# max_chars=None
         doc = sst.process_text(spacy_model, text)
 
@@ -104,11 +144,15 @@ class TextSentiment:
         st.write('Die Nachricht hat ein Sentiment von: {}'.format(score))
         plot = Tachometer().gauge(labels=['NEGATIVE', 'NEUTRAL','POSITIVE'],arrow=score, colors=['#DC143C','#778899','#32CD32'])
         st.pyplot(plot)
-        information = '''
-        Grundlage für diese Fallstudie ist ein bereit trainiertes Neuronales Netz, welches auf die jeweilige
+        
+        html = """<div>
+        <input type="checkbox" id="faq-1">
+        <h2><label for="faq-1">Weitere Informationen </label></h2>
+        <p id="drop">Grundlage für diese Fallstudie ist ein bereit trainiertes Neuronales Netz, welches auf die jeweilige
         Sprache vortrainiert wurde. Für weitere Informationen gucken Sie bitte hier: https://spacy.io/. Die Integration
-        in Streamlit erfolgte dankenswerterweise durch: https://github.com/explosion/spacy-streamlit'''
-        st.write(information)
+        in Streamlit erfolgte dankenswerterweise durch: https://github.com/explosion/spacy-streamlit</p>
+        </div>"""
+        st.markdown(html, unsafe_allow_html=True)
         
 class Tachometer:
     def __init__(self):

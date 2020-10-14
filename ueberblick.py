@@ -93,7 +93,7 @@ class Overview:
         html2="""
         <div>
         <input type="checkbox" id="faq-2">
-        <h2><label for="faq-2">2. Kunden Klassifikation</label></h2>
+        <h2><label for="faq-2">2. Kunden Clustering</label></h2>
         <p id="drop">Dem Kunden bedarfsgerechte Lösungen anzubieten, ist das Ziel von Vertriebs- und Marketingabteilungen. Doch wie sind die Kunden einzuordnen?
         Hier kann die Kunden Klassifikation unterstützen. Die Modelle erarbeiten "Cluster" von Kundengrruppen auf Basis von verschiedenen
         Merkmalen des einzelnen Kunden. Anschließend können die Kundengruppen gezielt angesprochen werden.</p>
@@ -111,7 +111,7 @@ class Overview:
         html4 ="""
         <div>
         <input type="checkbox" id="faq-4">
-        <h2><label for="faq-3">Allgemeine Informationen</label></h2>
+        <h2><label for="faq-4">Allgemeine Informationen</label></h2>
         <p id="drop">Die für diese Fallstudien verwendeten Daten sind freizugängliche, anonymisierte Datensätze.
         Rückschlüsse auf private Personen sind nicht möglich. Die einzelne Quelle findet sich unten in der
         jeweiligen Fallstudie. </p>
@@ -129,7 +129,7 @@ class Overview:
 def main():
     
     
-    case = st.sidebar.selectbox(label = 'Wählen Sie bitte die Fallstudie?', options = ['Überblick', 'Textanalyse', 'Kunden Klassifikation',
+    case = st.sidebar.selectbox(label = 'Wählen Sie bitte die Fallstudie?', options = ['Überblick', 'Textanalyse', 'Kunden Clustering',
                                                                                        'Kreditausfall'])
     if case == 'Überblick':
         css = """
@@ -180,7 +180,7 @@ def main():
         textSenti = TextSentiment()
         textSenti.run()
     
-    if case == 'Kunden Klassifikation':
+    if case == 'Kunden Clustering':
         
         customerClass = CustomerClassification()
         customerClass.run()

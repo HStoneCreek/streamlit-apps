@@ -186,11 +186,51 @@ class CreditDefault:
             h2 {
             color: #707172
             }
-            .customer {
-            font-size: 15px;
+            input[type="checkbox"] {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              opacity: 0;
             }
-            .customer:hover{
-            color: #f08200;
+        
+            label {
+              cursor: pointer;
+            }
+            label {
+              position: relative;
+              display: block;
+              padding-left: 30px;
+            }
+            label::before {
+              content: "";
+              position: absolute;
+              width: 0;
+              height: 0;
+              top: 50%;
+              left: 10px;
+              border-left: 8px solid black;
+              border-top: 8px solid transparent;
+              border-bottom: 8px solid transparent;
+              margin-top: -8px;
+            }
+            input[type="checkbox"]:checked ~ h2 label::before {
+              border-left: 8px solid transparent;
+              border-top: 8px solid black;
+              border-right: 8px solid transparent;
+              margin-left: -4px;
+              margin-top: -4px;
+            }
+
+            #drop {
+              max-height: 0;
+              overflow: hidden;
+              padding-left: 30px;
+              transition: max-height 0.4s ease;
+            }
+            input[type="checkbox"]:checked ~ h2 ~ #drop {
+              max-height: 200px;
             }
             </style>
         """
@@ -212,13 +252,22 @@ class CreditDefault:
         st.write('Auf Basis der eingestellten Parameter kommt das Modell zu folgender Entscheidung:')
         prediction = model.predict(newBorrower)
         if prediction == 0:
-            st.write('Die Kreditausfallwahrscheinlichkeit wird als gering eingestuft.')
-            
+            st.markdown("""<div class='customer'><b>Die Kreditausfallwahrscheinlichkeit wird als gering eingestuft.</b></div>""",unsafe_allow_html=True)
         elif prediction == 1:
-            st.write('Die Kreditausfallwahrscheinlichkeit wird als hoch eingestuft.')
+            
+            st.markdown("""<div class='customer'><b>Die Kreditausfallwahrscheinlichkeit wird als hoch eingestuft.</b></div>""",unsafe_allow_html=True)
+            
+        st.subheader('Analyse der Einflussfaktoren auf die Prognose - SHAP-Values')
         st.write('''Die folgenden Grafiken sollen veranschaulichen, welche Einflussfaktoren für die Entscheidung
                  des Modells maßgeblich waren. Diese sogeannten SHAP-Values dienen als Interpretationshilfe.
                  ''')
+        
+        html = """<div>
+        <input type="checkbox" id="faq-1">
+        <h2><label for="faq-1">Weitere Informationen </label></h2>
+        <p id="drop">Es folgen weitere Informationen</p>
+        </div>"""
+        st.markdown(html, unsafe_allow_html=True)
         
     def loadModel(self):
         with open("modelCreditDefault.p", 'rb') as input_file:

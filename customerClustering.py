@@ -220,7 +220,7 @@ class CustomerClassification:
             </style>
         """
         st.markdown(css, unsafe_allow_html=True)
-        st.title('2. Fallstudie Kundenklassifizierung')
+        st.title('2. Fallstudie Kunden Clustering')
         st.header('Am Beispiel von Besuchern einer Einkaufsstraße')
         textIntro = """
         Stellen Sie sich vor Sie sind Besitzer einer gut besuchten Einkaufsstraße. Über Kundenkarten können Sie die Umsätze
@@ -252,13 +252,12 @@ class CustomerClassification:
         st.markdown("""<div class='customer'>Ausgabenscore: """+str(round(dictSummary['Spending Score (1-100)'],2))+"""</div>""",unsafe_allow_html=True)
         st.write('Beschreibung des Clusters:')
         
-        st.markdown("""<div class='customer'><p style="color:#f08200>" """+str(dictSummary['Desc'])+"""</p></div>""",unsafe_allow_html=True)
+        st.markdown("""<div class='customer'><p style="color:#f08200"> """+str(dictSummary['Desc'])+"""</p></div>""",unsafe_allow_html=True)
         st.subheader('Verteilung der Einflussfaktoren pro Cluster')
         st.write('Im den folgenden Abbildungen sehen Sie Ihren erzeugten Kunden in Form des graumarkierten "x".')
         self.createViolinPlot(self.newCustomer)
         st.subheader('Darstellung der Cluster')
         self.createScatterPlot(self.newCustomer)
-        st.write('Info Text')
         
         html = """<div>
         <input type="checkbox" id="faq-1">
