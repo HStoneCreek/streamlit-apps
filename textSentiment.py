@@ -34,6 +34,25 @@ class TextSentiment:
         
     def run(self):
         
+        css = """
+            <style>h3:hover{
+            color: #0e3c8a;}
+            h1{
+            color: #f08200;
+            }
+            h2 {
+            color: #707172
+            }
+            .customer {
+            font-size: 15px;
+            }
+            .customer:hover{
+            color: #f08200;
+            }
+            </style>
+        """
+        st.markdown(css, unsafe_allow_html=True)
+        
         @st.cache
         def loadPipeline():
 

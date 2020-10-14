@@ -213,6 +213,7 @@ class CreditDefault:
         prediction = model.predict(newBorrower)
         if prediction == 0:
             st.write('Die Kreditausfallwahrscheinlichkeit wird als gering eingestuft.')
+            
         elif prediction == 1:
             st.write('Die Kreditausfallwahrscheinlichkeit wird als hoch eingestuft.')
         st.write('''Die folgenden Grafiken sollen veranschaulichen, welche Einflussfaktoren für die Entscheidung

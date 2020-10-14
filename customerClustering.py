@@ -171,6 +171,52 @@ class CustomerClassification:
             .customer:hover{
             color: #f08200;
             }
+            input[type="checkbox"] {
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              opacity: 0;
+            }
+        
+            label {
+              cursor: pointer;
+            }
+            label {
+              position: relative;
+              display: block;
+              padding-left: 30px;
+            }
+            label::before {
+              content: "";
+              position: absolute;
+              width: 0;
+              height: 0;
+              top: 50%;
+              left: 10px;
+              border-left: 8px solid black;
+              border-top: 8px solid transparent;
+              border-bottom: 8px solid transparent;
+              margin-top: -8px;
+            }
+            input[type="checkbox"]:checked ~ h2 label::before {
+              border-left: 8px solid transparent;
+              border-top: 8px solid black;
+              border-right: 8px solid transparent;
+              margin-left: -4px;
+              margin-top: -4px;
+            }
+
+            #drop {
+              max-height: 0;
+              overflow: hidden;
+              padding-left: 30px;
+              transition: max-height 0.4s ease;
+            }
+            input[type="checkbox"]:checked ~ h2 ~ #drop {
+              max-height: 200px;
+            }
             </style>
         """
         st.markdown(css, unsafe_allow_html=True)
@@ -206,12 +252,20 @@ class CustomerClassification:
         st.markdown("""<div class='customer'>Ausgabenscore: """+str(round(dictSummary['Spending Score (1-100)'],2))+"""</div>""",unsafe_allow_html=True)
         st.write('Beschreibung des Clusters:')
         
-        st.markdown("""<div style="color:#f08200>" """+str(dictSummary['Desc'])+"""</div>""",unsafe_allow_html=True)
+        st.markdown("""<div class='customer'><p style="color:#f08200>" """+str(dictSummary['Desc'])+"""</p></div>""",unsafe_allow_html=True)
         st.subheader('Verteilung der Einflussfaktoren pro Cluster')
+        st.write('Im den folgenden Abbildungen sehen Sie Ihren erzeugten Kunden in Form des graumarkierten "x".')
         self.createViolinPlot(self.newCustomer)
         st.subheader('Darstellung der Cluster')
         self.createScatterPlot(self.newCustomer)
         st.write('Info Text')
+        
+        html = """<div>
+        <input type="checkbox" id="faq-1">
+        <h2><label for="faq-1">Weitere Informationen </label></h2>
+        <p id="drop">Hier werden sich Informationen zu der Datengrundlage und dem angewendeten Modell finden..</p>
+        </div>"""
+        st.markdown(html, unsafe_allow_html=True)
         
     
 

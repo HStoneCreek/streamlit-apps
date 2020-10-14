@@ -110,7 +110,7 @@ class Overview:
         """
         html4 ="""
         <div>
-        <input type="checkbox" id="faq-3">
+        <input type="checkbox" id="faq-4">
         <h2><label for="faq-3">Allgemeine Informationen</label></h2>
         <p id="drop">Die für diese Fallstudien verwendeten Daten sind freizugängliche, anonymisierte Datensätze.
         Rückschlüsse auf private Personen sind nicht möglich. Die einzelne Quelle findet sich unten in der
