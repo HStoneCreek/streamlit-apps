@@ -270,7 +270,7 @@ class CreditDefault:
         st.markdown(html, unsafe_allow_html=True)
         
     def loadModel(self):
-        with open("modelCreditDefault.p", 'rb') as input_file:
-            modelTest = pickle.load(input_file)
-        return modelTest
+        model = pickle.load(open("xgb_reg.pkl", 'rb'))
+        
+        return model
 
