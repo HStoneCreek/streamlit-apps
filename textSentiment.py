@@ -17,9 +17,9 @@ from matplotlib.patches import Circle, Wedge, Rectangle
 st.set_option('deprecation.showPyplotGlobalUse', False)
 import spacy
 from spacy import load
-import en_core_web_md
+#import en_core_web_md
 
-nlpEN = en_core_web_md.load()
+#nlpEN = en_core_web_md.load()
 
 
 # In[ ]:

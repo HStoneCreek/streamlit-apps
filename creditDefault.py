@@ -102,7 +102,8 @@ class CreditDefault:
         model = self.loadModel()
         
         css = """
-            <style>h3:hover{
+            <style>
+            h3:hover{
             color: #0e3c8a;}
             h1{
             color: #f08200;
@@ -119,15 +120,15 @@ class CreditDefault:
               opacity: 0;
             }
         
-            label {
+            .info {
               cursor: pointer;
             }
-            label {
+            .info {
               position: relative;
               display: block;
               padding-left: 30px;
             }
-            label::before {
+            .info::before {
               content: "";
               position: absolute;
               width: 0;
@@ -139,7 +140,7 @@ class CreditDefault:
               border-bottom: 8px solid transparent;
               margin-top: -8px;
             }
-            input[type="checkbox"]:checked ~ h2 label::before {
+            input[type="checkbox"]:checked ~ h2 .info::before {
               border-left: 8px solid transparent;
               border-top: 8px solid black;
               border-right: 8px solid transparent;
@@ -188,11 +189,11 @@ class CreditDefault:
         
         html = """<div>
         <input type="checkbox" id="faq-1">
-        <h2><label for="faq-1">Weitere Informationen </label></h2>
+        <h2><label class='info' for="faq-1">Weitere Informationen </label></h2>
         <p id="drop">Es folgen weitere Informationen</p>
         </div>"""
         st.markdown(html, unsafe_allow_html=True)
-        
+     
     def loadModel(self):
         model = pickle.load(open("xgb_reg.pkl", 'rb'))
         

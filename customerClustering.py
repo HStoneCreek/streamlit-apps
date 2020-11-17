@@ -1,92 +1,35 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[89]:
-
-
 
 #https://www.kaggle.com/hendriksteinbach/mall-customer-segmentation-using-k-means/edit
 
-import numpy as np # linear algebra
-import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 
-
-# In[90]:
-
-
+import pandas as pd
 import warnings
 warnings.filterwarnings('ignore')
 
-
-# In[142]:
-
-
-# Importing libraries
-import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 import streamlit as st
 
+import pickle
 
-# In[92]:
-
-
-# Data display coustomization
-pd.set_option('display.max_columns', None)
-pd.set_option('display.max_colwidth', -1)
-
-
-# In[93]:
-
-
-# To perform Hierarchical clustering
-from scipy.cluster.hierarchy import linkage
-from scipy.cluster.hierarchy import dendrogram
-from scipy.cluster.hierarchy import cut_tree
-from sklearn.metrics import silhouette_score
-from sklearn.cluster import KMeans
-
-
-# In[150]:
-
-
-# import all libraries and dependencies for machine learning
 from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import PCA
-from sklearn.decomposition import IncrementalPCA
-from sklearn.neighbors import NearestNeighbors
-from random import sample
-from numpy.random import uniform
-from math import isnan
 
 plt.rcParams["axes.labelsize"] = 20
 
 
-# In[1]:
-
-
 class CustomerClassification:
     def __init__(self):
-        self.mall = pd.read_csv(r"Mall_Customers.csv")
-        self.mall_d = None
-        self.mall_df1 = None
+        self.mall = pd.read_csv(r"Mall_Customers.csv").drop(['CustomerID','Gender'],axis=1)
+        self.mall_d = pickle.load(open("dataClustering.pkl", "rb"))
         self.newCustomer = None
         self.cluster = None
-        self.scaler = None
+        self.scaler = StandardScaler()
         self.summary = None
         
-    def prepareData(self):
-        mall_c = self.mall.drop(['CustomerID','Gender'],axis=1,inplace=True)
-        self.mall_d= self.mall.copy()
-        self.mall_d.drop_duplicates(subset=None,inplace=True)
-        self.scaler = StandardScaler()
-        mall_scaled = self.scaler.fit_transform(self.mall)
-        self.mall_df1 = pd.DataFrame(mall_scaled, columns = ['Age', 'Annual Income (k$)', 'Spending Score (1-100)'])
+    
     def predict(self):
-        self.cluster = KMeans(n_clusters=4, max_iter=150, random_state= 0)
-        self.cluster.fit(self.mall_df1)
-        self.mall_d['Cluster_Id'] = self.cluster.labels_
+        self.cluster = pickle.load(open("modelClustering.pkl", "rb"))
+        
     def createNewCustomer(self):
         st.sidebar.title('Wähle die Eigenschaften des neuen Kunden aus:')
         age = st.sidebar.slider('Alter', 18, 100, 30)
@@ -103,25 +46,25 @@ class CustomerClassification:
         
     def createScatterPlot(self,newCustomer):
         plt.figure(figsize = (20,8))
-        #plt.subplot(1,3,1)
+
         st.markdown("""<div><h4>Verhältnis von Alter und jährlichem Einkommen</h4></div>""",unsafe_allow_html=True)
         sns.scatterplot(x = 'Age', y = 'Annual Income (k$)',hue='Cluster_Id',data = self.mall_d,legend='full',s = 120,palette="Set1")
         sns.scatterplot(x='Age', y='Annual Income (k$)',marker='X', data = self.newCustomer,s = 600,color='#707172')
-        #plt.subplot(1,3,2)
         st.pyplot(plt)
         
         plt.figure(figsize = (20,8))
         st.markdown("""<div><h4>Verhältnis von jährlichem Einkommen und Ausgabenscore</h4></div>""",unsafe_allow_html=True)
         sns.scatterplot(x = 'Annual Income (k$)', y = 'Spending Score (1-100)',hue='Cluster_Id', data = self.mall_d,legend='full',s=120,palette="Set1")
         sns.scatterplot(x='Age', y='Spending Score (1-100)',marker='X', data = self.newCustomer,s = 600,color='#707172')
-        #plt.subplot(1,3,3)
         st.pyplot(plt)
         
         plt.figure(figsize = (20,8))
         st.markdown("""<div><h4>Verhältnis von Ausgabenscore und Alter</h4></div>""",unsafe_allow_html=True)
         sns.scatterplot(x = 'Spending Score (1-100)', y = 'Age',hue='Cluster_Id',data= self.mall_d,legend='full',s=120,palette="Set1")
-        sns.scatterplot(x='Age', y='Age',marker='X', data = self.newCustomer,s = 600,color='#707172')
+        sns.scatterplot(x='Spending Score (1-100)', y='Age',marker='X', data = self.newCustomer,s = 600,color='#707172')
         st.pyplot(plt)
+        
+        
     def createViolinPlot(self, newCustomer):
         fig, axes = plt.subplots(1,3, figsize=(20,5))
 
@@ -131,7 +74,6 @@ class CustomerClassification:
         sns.scatterplot(x='Cluster_Id', y='Annual Income (k$)',marker='X', data = self.newCustomer,ax=axes[1], s= 300,color='#707172')
         sns.violinplot(x = 'Cluster_Id', y = 'Spending Score (1-100)', inner=None,data=self.mall_d,ax=axes[2])
         sns.scatterplot(x='Cluster_Id', y='Spending Score (1-100)', marker='X', data = self.newCustomer,ax=axes[2], s= 300,color='#707172')
-
         st.pyplot(fig)
         
     def getSummary(self):
@@ -152,19 +94,22 @@ class CustomerClassification:
     def run(self):
         i = 0
         if i <1:
-            self.prepareData()
             self.predict()
             i +=1    
         self.createNewCustomer()
         css = """
-            <style>h3:hover{
+            <style>
+            h3:hover{
             color: #0e3c8a;}
+            
             h1{
             color: #f08200;
             }
+            
             h2 {
             color: #707172
             }
+            
             .customer {
             font-size: 15px;
             }
@@ -180,15 +125,15 @@ class CustomerClassification:
               opacity: 0;
             }
         
-            label {
+            .info {
               cursor: pointer;
             }
-            label {
+            .info {
               position: relative;
               display: block;
               padding-left: 30px;
             }
-            label::before {
+            .info::before {
               content: "";
               position: absolute;
               width: 0;
@@ -200,7 +145,7 @@ class CustomerClassification:
               border-bottom: 8px solid transparent;
               margin-top: -8px;
             }
-            input[type="checkbox"]:checked ~ h2 label::before {
+            input[type="checkbox"]:checked ~ h2 .info::before {
               border-left: 8px solid transparent;
               border-top: 8px solid black;
               border-right: 8px solid transparent;
@@ -261,15 +206,11 @@ class CustomerClassification:
         
         html = """<div>
         <input type="checkbox" id="faq-1">
-        <h2><label for="faq-1">Weitere Informationen </label></h2>
+        <h2><label class='info' for="faq-1">Weitere Informationen </label></h2>
         <p id="drop">Hier werden sich Informationen zu der Datengrundlage und dem angewendeten Modell finden..</p>
         </div>"""
         st.markdown(html, unsafe_allow_html=True)
-        
-    
 
-
-# In[ ]:
 
 
 
